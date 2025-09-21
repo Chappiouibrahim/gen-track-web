@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import { Box, Toolbar } from "@mui/material";
 
 function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <Navbar toggleSidebar={toggleSidebar} />
-      <main style={{ flexGrow: 1, padding: "2rem", marginTop: "64px" }}>
+    <Box sx={{ display: "flex" }}>
+      <Navbar />
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Toolbar /> {/* pour laisser un espace sous la Navbar */}
         <Outlet />
-      </main>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

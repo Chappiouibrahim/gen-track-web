@@ -1,41 +1,49 @@
 import React from "react";
-import { Grid, Card, CardContent, Typography, Stack, Button } from "@mui/material";
-import { Groups, Build, Warning, Report } from "@mui/icons-material";
+import { Grid, Card, CardContent, Typography } from "@mui/material";
 
 function Dashboard() {
-  const stats = [
-    { title: "Groupes", value: 12, icon: <Groups fontSize="large" />, color: "#1976d2", subtitle: "Total installés" },
-    { title: "Interventions", value: 34, icon: <Build fontSize="large" />, color: "#2e7d32", subtitle: "Cette semaine" },
-    { title: "Pannes", value: 5, icon: <Warning fontSize="large" />, color: "#ed6c02", subtitle: "En cours" },
-    { title: "Alertes", value: 8, icon: <Report fontSize="large" />, color: "#d32f2f", subtitle: "À vérifier" },
-  ];
-
   return (
-    <Stack spacing={3} sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Dashboard
-      </Typography>
-
-      <Grid container spacing={3}>
-        {stats.map((stat, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}>
-            <Card sx={{ bgcolor: stat.color, color: "white", display: "flex", alignItems: "center", gap: 2, p: 2 }}>
-              {stat.icon}
-              <Stack>
-                <Typography variant="h6">{stat.title}</Typography>
-                <Typography variant="h4" fontWeight="bold">{stat.value}</Typography>
-                <Typography variant="body2">{stat.subtitle}</Typography>
-              </Stack>
-            </Card>
-          </Grid>
-        ))}
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={6} md={3}>
+        <Card sx={{ bgcolor: "#1976d2", color: "white" }}>
+          <CardContent>
+            <Typography variant="h6">Groupes</Typography>
+            <Typography variant="h4">12</Typography>
+            <Typography variant="body2">Total installés</Typography>
+          </CardContent>
+        </Card>
       </Grid>
 
-      <Stack direction="row" spacing={2}>
-        <Button variant="contained" color="primary">Voir toutes les interventions</Button>
-        <Button variant="outlined" color="secondary">Planifier une maintenance</Button>
-      </Stack>
-    </Stack>
+      <Grid item xs={12} sm={6} md={3}>
+        <Card sx={{ bgcolor: "#2e7d32", color: "white" }}>
+          <CardContent>
+            <Typography variant="h6">Interventions</Typography>
+            <Typography variant="h4">34</Typography>
+            <Typography variant="body2">Cette semaine</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      <Grid item xs={12} sm={6} md={3}>
+        <Card sx={{ bgcolor: "#ed6c02", color: "white" }}>
+          <CardContent>
+            <Typography variant="h6">Pannes</Typography>
+            <Typography variant="h4">5</Typography>
+            <Typography variant="body2">En cours</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      <Grid item xs={12} sm={6} md={3}>
+        <Card sx={{ bgcolor: "#d32f2f", color: "white" }}>
+          <CardContent>
+            <Typography variant="h6">Alertes</Typography>
+            <Typography variant="h4">8</Typography>
+            <Typography variant="body2">À vérifier</Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }
 
