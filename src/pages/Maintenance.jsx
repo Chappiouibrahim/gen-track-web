@@ -13,7 +13,6 @@ import {
   TextField,
   MenuItem,
   Select,
-  InputLabel,
   FormControl,
 } from "@mui/material";
 
@@ -25,15 +24,24 @@ const initialMaintenances = [
 function Maintenance() {
   const [maintenances, setMaintenances] = useState(initialMaintenances);
   const [open, setOpen] = useState(false);
-  const [newMaintenance, setNewMaintenance] = useState({ groupe: "", type: "Préventive", date: "", status: "Planifiée" });
+  const [filterStatus, setFilterStatus] = useState(""); // "" = Tous
+  const [newMaintenance, setNewMaintenance] = useState({
+    groupe: "",
+    type: "Préventive",
+    date: "",
+    status: "Planifiée",
+  });
 
+  // Ouvrir/fermer
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // Changement des champs
   const handleChange = (e) => {
     setNewMaintenance({ ...newMaintenance, [e.target.name]: e.target.value });
   };
 
+  // Ajouter une maintenance
   const handleAdd = () => {
     const nextId = maintenances.length + 1;
     setMaintenances([...maintenances, { ...newMaintenance, id: nextId }]);
@@ -41,9 +49,14 @@ function Maintenance() {
     handleClose();
   };
 
+  // Supprimer
   const handleDelete = (id) => {
     setMaintenances(maintenances.filter((m) => m.id !== id));
   };
+
+  // Filtrer par statut
+  const filteredMaintenances =
+    filterStatus === "" ? maintenances : maintenances.filter((m) => m.status === filterStatus);
 
   return (
     <Box>
@@ -51,12 +64,30 @@ function Maintenance() {
         Maintenance
       </Typography>
 
-      <Button variant="contained" color="primary" sx={{ mb: 2 }} onClick={handleOpen}>
-        Planifier Maintenance
-      </Button>
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+        <Button variant="contained" color="primary" onClick={handleOpen}>
+          Planifier Maintenance
+        </Button>
+
+        {/* Filtre Status sans superposition */}
+        <FormControl sx={{ minWidth: 150 }}>
+          <Select
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">
+              <em>Tous</em>
+            </MenuItem>
+            <MenuItem value="Planifiée">Planifiée</MenuItem>
+            <MenuItem value="En cours">En cours</MenuItem>
+            <MenuItem value="Terminée">Terminée</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
       <Grid container spacing={3}>
-        {maintenances.map((m) => (
+        {filteredMaintenances.map((m) => (
           <Grid item xs={12} sm={6} md={4} key={m.id}>
             <Card>
               <CardContent>
@@ -93,7 +124,6 @@ function Maintenance() {
           />
 
           <FormControl fullWidth margin="dense">
-            <InputLabel>Type</InputLabel>
             <Select name="type" value={newMaintenance.type} onChange={handleChange}>
               <MenuItem value="Préventive">Préventive</MenuItem>
               <MenuItem value="Corrective">Corrective</MenuItem>
@@ -112,7 +142,6 @@ function Maintenance() {
           />
 
           <FormControl fullWidth margin="dense">
-            <InputLabel>Status</InputLabel>
             <Select name="status" value={newMaintenance.status} onChange={handleChange}>
               <MenuItem value="Planifiée">Planifiée</MenuItem>
               <MenuItem value="En cours">En cours</MenuItem>
